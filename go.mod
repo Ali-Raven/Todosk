@@ -1,4 +1,4 @@
-module github.com/Todo
+module github.com/Ali-Raven/Todosk
 
 go 1.25.4
 
