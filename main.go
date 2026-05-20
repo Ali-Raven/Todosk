@@ -64,6 +64,9 @@ func main() {
 	}
 }
 
+// hash generator for the task ID => called uuid in the json file that created by program 
+//
+// return string hash (sha256 checksum)
 func GenerateHash(name string) string {
 	if name == "" {
 		return "unknown task name"
@@ -73,6 +76,9 @@ func GenerateHash(name string) string {
 	return hex.EncodeToString(hash[:])[:10]
 }
 
+// adding task function , add task to the json file 
+//
+// return void , nothing returned
 func addTasks(scanner *bufio.Scanner) {
 	figure.NewColorFigure("Add Task", "", "Purple", true).Print()
 	fmt.Println(color.Yellow + "\nprocessing ..." + color.Reset)
@@ -122,6 +128,9 @@ func addTasks(scanner *bufio.Scanner) {
 	}
 }
 
+// loading tasks by reading the json file if exists and parsed to string []Task
+// 
+// return nothing
 func loadTasks() (Todos, error) {
 	var readTask Todos
 	binData, err := os.ReadFile(GetCurrentPath() + "data/tasks.json")
@@ -173,6 +182,9 @@ func readRequireInfo(scanner bufio.Scanner, label string) string {
 	}
 }
 
+// checking validation of the data that given from user 
+// prevent wrong input of date and check with xxxx/xx/xx format
+// return string , error => for error handling 
 func checkDateValication(usrDate string) (string, error) {
 	pattern := `^\d{4}/\d{2}/\d{2}`
 
@@ -194,6 +206,10 @@ func checkDateValication(usrDate string) (string, error) {
 
 }
 
+
+// saving tasks to the defined struct of Tasks and encode to json structure
+// 
+// return void
 func saveTasks(task Todos) {
 	data := Todos{Tasks: task.Tasks}
 	jsonbytes, _ := json.MarshalIndent(data, "", " ")
@@ -219,6 +235,9 @@ func saveTasks(task Todos) {
 	}
 }
 
+// checking if data directory for json exist , if not create that directory and the json file
+//
+// return (string , error)
 func checkingDataDir() (string, error) {
 	if err := os.MkdirAll(GetCurrentPath()+"/data", 0755); err != nil {
 		return "Error creating directory", err
